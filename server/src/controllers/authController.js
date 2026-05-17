@@ -30,8 +30,8 @@ async function register(req, res) {
   // The 10 is the "salt rounds" — higher = slower but more secure (10 is the standard)
   const passwordHash = await bcrypt.hash(password, 10);
 
-  // Save the new user to the database
-  const user = await createUser(name, email, passwordHash, address);
+  // Save the new user to the database — req.imageUrl is set by uploadToCloudinary (optional)
+  const user = await createUser(name, email, passwordHash, address, req.imageUrl);
 
   // Return a token so the user is immediately logged in after registering
   const token = generateToken(user);

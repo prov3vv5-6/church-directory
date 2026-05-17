@@ -1,12 +1,12 @@
 const db = require('../config/db');
 
 // Insert a new user and return the created row
-async function createUser(name, email, passwordHash, address) {
+async function createUser(name, email, passwordHash, address, profilePictureUrl) {
   const result = await db.query(
-    `INSERT INTO users (name, email, password_hash, address)
-     VALUES ($1, $2, $3, $4)
+    `INSERT INTO users (name, email, password_hash, address, profile_picture_url)
+     VALUES ($1, $2, $3, $4, $5)
      RETURNING id, name, email, address, profile_picture_url, created_at`,
-    [name, email, passwordHash, address || null]
+    [name, email, passwordHash, address || null, profilePictureUrl || null]
   );
   return result.rows[0];
 }

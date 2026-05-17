@@ -26,8 +26,9 @@ async function updateUserById(req, res) {
     return res.status(403).json({ error: 'You can only edit your own profile' });
   }
 
-  const { name, address, profile_picture_url } = req.body;
-  const updated = await updateUser(requestedId, { name, address, profile_picture_url });
+  const { name, address } = req.body;
+  // req.imageUrl is set by uploadToCloudinary if a file was uploaded, otherwise undefined
+  const updated = await updateUser(requestedId, { name, address, profile_picture_url: req.imageUrl });
 
   if (!updated) {
     return res.status(404).json({ error: 'User not found' });
