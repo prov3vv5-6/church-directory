@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const authRoutes = require('./routes/authRoutes');
 
 dotenv.config();
 
@@ -17,9 +18,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Church Directory API is running' });
 });
 
-// TODO: mount auth and user routes here later
-// app.use('/api/auth', authRoutes);
-// app.use('/api/users', usersRoutes);
+app.use('/api/auth', authRoutes);
+// app.use('/api/users', usersRoutes); — added in next step
 
 const PORT = process.env.PORT || 3001;
 
