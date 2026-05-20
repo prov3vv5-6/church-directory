@@ -11,14 +11,18 @@ const upload = multer({ storage });
 function uploadToCloudinary(req, res, next) {
   if (!req.file) return next(); // no file uploaded — skip, it's optional
 
-  cloudinary.uploader.upload_stream(
-    { folder: 'church-directory' }, // images go into this folder in your Cloudinary account
-    (error, result) => {
-      if (error) return res.status(500).json({ error: 'Image upload failed' });
-      req.imageUrl = result.secure_url; // attach the URL so the controller can save it
-      next();
-    }
-  ).end(req.file.buffer); // send the in-memory file buffer to Cloudinary
+  try {
+    cloudinary.uploader.upload_stream(
+      { folder: 'church-directory' },
+      (error, result) => {
+        if (error) return next(error); // pass to global error handler
+        req.imageUrl = result.secure_url;
+        next();
+      }
+    ).end(req.file.buffer);
+  } catch (err) {
+    next(err); // catch any synchronous throw from upload_stream
+  }
 }
 
 module.exports = { upload, uploadToCloudinary };
