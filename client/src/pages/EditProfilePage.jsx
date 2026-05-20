@@ -44,7 +44,8 @@ export default function EditProfilePage() {
       login(token, updatedUser);
       setSuccess(true);
     } catch (err) {
-      setServerError(err.response?.data?.error || "Update failed. Try again.");
+      const errData = err.response?.data;
+      setServerError(typeof errData?.error === 'string' ? errData.error : errData?.message || "Update failed. Try again.");
     }
   }
 

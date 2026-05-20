@@ -38,7 +38,8 @@ export default function RegisterPage() {
       login(data.token, data.user);
       navigate("/directory");
     } catch (err) {
-      setServerError(err.response?.data?.error || "Registration failed. Try again.");
+      const errData = err.response?.data;
+      setServerError(typeof errData?.error === 'string' ? errData.error : errData?.message || "Registration failed. Try again.");
     }
   }
 

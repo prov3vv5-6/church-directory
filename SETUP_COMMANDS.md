@@ -22,6 +22,10 @@ Run these in order from inside: C:\Users\morit\MyCProjects\Church_Directory
 
 ---
 
+## Run in terminal to install plugin available for Claude, Cursor, and Codex
+
+npx plugins add vercel/vercel-plugin
+
 ## Phase 1 — Project Setup
 
 ### Step 1: Create the React frontend (Vite)
