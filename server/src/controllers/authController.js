@@ -65,4 +65,13 @@ async function login(req, res) {
   res.json({ token, user: safeUser });
 }
 
-module.exports = { register, login };
+// GET /api/auth/me — returns the currently logged-in user's profile
+async function getMe(req, res) {
+  const user = await require('../models/userModel').findUserById(req.user.id);
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  res.json(user);
+}
+
+module.exports = { register, login, getMe };

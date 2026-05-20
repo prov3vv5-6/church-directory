@@ -1,3 +1,10 @@
 # Next Steps
 
-i want to test what we have done so far with Postman/Bruno by registering a new user with a photo attached, then move on to phase 6 (React frontend)
+Phase 6 complete — React frontend built.
+
+Phase 7 next: Polish + Deploy
+- Form validation error UX polish (inline vs toast)
+- Responsive / mobile CSS tweaks
+- Deploy frontend to Vercel
+- Deploy backend + DB to Railway
+- Set VITE_API_URL in Vercel env vars to Railway URL
