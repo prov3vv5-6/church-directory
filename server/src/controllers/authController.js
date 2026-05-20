@@ -12,30 +12,34 @@ function generateToken(user) {
 }
 
 // POST /api/auth/register
-async function register(req, res) {
-  const { name, email, password, address } = req.body;
+async function register(req, res, next) {
+  try {
+    console.log('register hit, body:', req.body);
+    const { name, email, password, address } = req.body;
 
-  // Basic validation — make sure required fields are present
-  if (!name || !email || !password) {
-    return res.status(400).json({ error: 'Name, email, and password are required' });
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'Name, email, and password are required' });
+    }
+
+    console.log('checking for existing user...');
+    const existing = await findUserByEmail(email);
+    if (existing) {
+      return res.status(409).json({ error: 'An account with that email already exists' });
+    }
+
+    console.log('hashing password...');
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    console.log('creating user...');
+    const user = await createUser(name, email, passwordHash, address, req.imageUrl);
+
+    console.log('user created:', user.id);
+    const token = generateToken(user);
+    res.status(201).json({ token, user });
+  } catch (err) {
+    console.error('register error:', err);
+    next(err);
   }
-
-  // Check if someone already registered with this email
-  const existing = await findUserByEmail(email);
-  if (existing) {
-    return res.status(409).json({ error: 'An account with that email already exists' });
-  }
-
-  // Hash the password — bcrypt turns it into a scrambled string (irreversible)
-  // The 10 is the "salt rounds" — higher = slower but more secure (10 is the standard)
-  const passwordHash = await bcrypt.hash(password, 10);
-
-  // Save the new user to the database — req.imageUrl is set by uploadToCloudinary (optional)
-  const user = await createUser(name, email, passwordHash, address, req.imageUrl);
-
-  // Return a token so the user is immediately logged in after registering
-  const token = generateToken(user);
-  res.status(201).json({ token, user });
 }
 
 // POST /api/auth/login
