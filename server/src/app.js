@@ -9,9 +9,16 @@ dotenv.config();
 const app = express();
 
 // Allow requests from the React frontend.
-// CORS_ORIGIN is set to the Vercel URL in production; falls back to localhost in dev.
+// CORS_ORIGIN can be a comma-separated list of allowed origins.
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173').split(',').map(o => o.trim());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS blocked: ${origin}`));
+    }
+  },
 }));
 
 // Parse incoming request bodies as JSON
