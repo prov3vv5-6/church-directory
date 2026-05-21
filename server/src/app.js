@@ -39,6 +39,14 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message || 'Something went wrong' });
 });
 
+// Log anything that kills the process so Railway deploy logs show the cause
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION:', err.message, err.stack);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('UNHANDLED REJECTION:', reason);
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
