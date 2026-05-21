@@ -7,4 +7,10 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }, // required for Supabase
 });
 
+// Without this handler, a dropped idle connection would emit an unhandled 'error'
+// event and crash the entire Node process.
+pool.on('error', (err) => {
+  console.error('Unexpected database pool error:', err.message);
+});
+
 module.exports = pool;
