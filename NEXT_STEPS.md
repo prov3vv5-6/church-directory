@@ -2,7 +2,6 @@
 
 updates
 
-1. after updating a profile return to directory page
 2. make images bigger and better quality
 3. show password at login and registeration
 4. be able to delete account
