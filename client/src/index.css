@@ -362,15 +362,10 @@ code {
 }
 
 .member-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
+  position: relative;
   padding: 1.25rem 1rem;
   border: 1px solid var(--border);
   border-radius: 12px;
-  text-decoration: none;
-  color: var(--text-h);
   background: var(--bg);
   transition: box-shadow 0.15s, border-color 0.15s;
 }
@@ -378,6 +373,34 @@ code {
 .member-card:hover {
   border-color: var(--accent-border);
   box-shadow: var(--shadow);
+}
+
+.member-card-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--text-h);
+}
+
+.card-delete-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--text);
+  opacity: 0.4;
+  line-height: 1;
+  padding: 0.1rem 0.3rem;
+}
+
+.card-delete-btn:hover {
+  opacity: 1;
+  color: #e53e3e;
 }
 
 .member-avatar img,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getAllMembers } from "../services/members";
+import { getAllMembers, deleteMember } from "../services/members";
 
 export default function DirectoryPage() {
   const { user, logout } = useAuth();
@@ -20,6 +20,17 @@ export default function DirectoryPage() {
   function handleLogout() {
     logout();
     navigate("/login");
+  }
+
+  async function handleDeleteMember(id, name) {
+    const confirmed = window.confirm(`Delete ${name}'s account? This cannot be undone.`);
+    if (!confirmed) return;
+    try {
+      await deleteMember(id);
+      setMembers((prev) => prev.filter((m) => m.id !== id));
+    } catch {
+      setError("Failed to delete account. Try again.");
+    }
   }
 
   return (
@@ -43,22 +54,28 @@ export default function DirectoryPage() {
 
       <div className="member-grid">
         {members.map((member) => (
-          <Link
-            to={`/profile/${member.id}`}
-            key={member.id}
-            className="member-card"
-          >
-            <div className="member-avatar">
-              {member.profile_picture_url ? (
-                <img src={member.profile_picture_url} alt={member.name} />
-              ) : (
-                <div className="avatar-placeholder">
-                  {member.name.charAt(0).toUpperCase()}
-                </div>
-              )}
-            </div>
-            <p className="member-name">{member.name}</p>
-          </Link>
+          <div key={member.id} className="member-card">
+            <Link to={`/profile/${member.id}`} className="member-card-link">
+              <div className="member-avatar">
+                {member.profile_picture_url ? (
+                  <img src={member.profile_picture_url} alt={member.name} />
+                ) : (
+                  <div className="avatar-placeholder">
+                    {member.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
+              </div>
+              <p className="member-name">{member.name}</p>
+            </Link>
+            {user?.is_admin && (
+              <button
+                className="card-delete-btn"
+                onClick={() => handleDeleteMember(member.id, member.name)}
+              >
+                ×
+              </button>
+            )}
+          </div>
         ))}
       </div>
     </div>

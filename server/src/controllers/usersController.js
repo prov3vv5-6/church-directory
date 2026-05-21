@@ -41,8 +41,8 @@ async function updateUserById(req, res) {
 async function deleteUserById(req, res) {
   const requestedId = parseInt(req.params.id);
 
-  if (requestedId !== req.user.id) {
-    return res.status(403).json({ error: 'You can only delete your own account' });
+  if (requestedId !== req.user.id && !req.user.is_admin) {
+    return res.status(403).json({ error: 'Forbidden' });
   }
 
   await deleteUser(requestedId);

@@ -8,4 +8,4 @@ updates
 4. be able to change password
 5. send verification email
 6. change colors to church brand colors
-7. add admin pivilages to be able to delete accounts, and possibly other privilages
+7. add admin pivilages to be able to delete accounts

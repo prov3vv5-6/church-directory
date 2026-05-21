@@ -5,9 +5,9 @@ const { createUser, findUserByEmail } = require('../models/userModel');
 // Helper — creates a signed JWT containing the user's id and email
 function generateToken(user) {
   return jwt.sign(
-    { id: user.id, email: user.email },
+    { id: user.id, email: user.email, is_admin: user.is_admin || false },
     process.env.JWT_SECRET,
-    { expiresIn: '7d' } // token expires after 7 days
+    { expiresIn: '7d' }
   );
 }
 

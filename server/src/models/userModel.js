@@ -5,7 +5,7 @@ async function createUser(name, email, passwordHash, address, profilePictureUrl)
   const result = await db.query(
     `INSERT INTO users (name, email, password_hash, address, profile_picture_url)
      VALUES ($1, $2, $3, $4, $5)
-     RETURNING id, name, email, address, profile_picture_url, created_at`,
+     RETURNING id, name, email, address, profile_picture_url, is_admin, created_at`,
     [name, email, passwordHash, address || null, profilePictureUrl || null]
   );
   return result.rows[0];
@@ -23,7 +23,7 @@ async function findUserByEmail(email) {
 // Find a user by ID — omits password_hash since we never want to send it to the frontend
 async function findUserById(id) {
   const result = await db.query(
-    `SELECT id, name, email, address, profile_picture_url, created_at
+    `SELECT id, name, email, address, profile_picture_url, is_admin, created_at
      FROM users WHERE id = $1`,
     [id]
   );
@@ -33,7 +33,7 @@ async function findUserById(id) {
 // Return all users for the directory — safe fields only, sorted alphabetically
 async function getAllUsers() {
   const result = await db.query(
-    `SELECT id, name, email, address, profile_picture_url
+    `SELECT id, name, email, address, profile_picture_url, is_admin
      FROM users
      ORDER BY name ASC`
   );
