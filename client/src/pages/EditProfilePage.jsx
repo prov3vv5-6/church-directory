@@ -8,7 +8,6 @@ export default function EditProfilePage() {
   const { user, login, token } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [preview, setPreview] = useState(user?.profile_picture_url || null);
 
   const {
@@ -29,7 +28,6 @@ export default function EditProfilePage() {
 
   async function onSubmit(values) {
     setServerError("");
-    setSuccess(false);
     try {
       const formData = new FormData();
       formData.append("name", values.name);
@@ -42,7 +40,7 @@ export default function EditProfilePage() {
 
       // Keep AuthContext in sync so the rest of the app sees the new name/photo
       login(token, updatedUser);
-      setSuccess(true);
+      navigate("/directory");
     } catch (err) {
       const errData = err.response?.data;
       setServerError(typeof errData?.error === 'string' ? errData.error : errData?.message || "Update failed. Try again.");
@@ -88,7 +86,6 @@ export default function EditProfilePage() {
           </div>
 
           {serverError && <p className="server-error">{serverError}</p>}
-          {success && <p className="success-msg">Profile updated!</p>}
 
           <div className="form-actions">
             <button type="submit" disabled={isSubmitting} className="btn-primary">

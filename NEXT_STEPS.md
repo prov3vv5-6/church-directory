@@ -1,8 +1,12 @@
 # Next Steps
 
-● Yes — replace [YOUR-PASSWORD] with your actual Supabase database password. You can find it
-in Supabase → Settings → Database → scroll down to "Database password" section. There should be a "Reset password" option if you've never seen it, or a reveal button to show the  
- current one.
+updates
 
-Your password from the local .env file (URL-decoded) is #VfU%4gqtq3PEWK — but since Supabase
-might show it differently in the dashboard, it's safer to grab it from there directly.
+1. after updating a profile return to directory page
+2. make images bigger and better quality
+3. show password at login and registeration
+4. be able to delete account
+5. be able to change password
+6. send verification email
+7. change colors to church brand colors
+8. add admin pivilages to be able to delete accounts, and possibly other privilages

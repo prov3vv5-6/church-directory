@@ -199,12 +199,3 @@ After each phase, we'll verify by:
 2. Running the frontend with `npm run dev` and manually clicking through the UI
 3. Checking the database to confirm records are saved correctly
 4. At the end: registering a test account, logging in, viewing the directory, and uploading a profile photo end-to-end
-
-updates
-
-1. after updating a profile return to directory page
-2. make images bigger and better quality
-3. show password at login and registeration
-4. be able to delete account
-5. be able to change password
-6. send verification email
