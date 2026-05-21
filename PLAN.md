@@ -1,20 +1,21 @@
 # Church Directory Web App — Implementation Plan
 
 ## Context
+
 The church currently has a Subsplash website and app. We're building a standalone web application — a member directory — that users can link to from both. Members create an account, upload a photo, and can view other members once logged in. The goal is to build this step-by-step as a learning exercise, with clean, well-commented, scalable code.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology | Why |
-|---|---|---|
-| Frontend | React + Vite | Fast dev server, industry standard, great for learning |
-| Backend | Node.js + Express | JavaScript on both sides (easier to learn), huge ecosystem |
-| Database | PostgreSQL | Relational, free on Railway/Supabase, scales well |
-| Auth | JWT (JSON Web Tokens) | Stateless, works great across frontend/backend |
-| File Storage | Cloudinary | Free tier, handles image uploads + optimization |
-| Deployment | Vercel (frontend) + Railway (backend + DB) | Both have free tiers |
+| Layer        | Technology                                 | Why                                                        |
+| ------------ | ------------------------------------------ | ---------------------------------------------------------- |
+| Frontend     | React + Vite                               | Fast dev server, industry standard, great for learning     |
+| Backend      | Node.js + Express                          | JavaScript on both sides (easier to learn), huge ecosystem |
+| Database     | PostgreSQL                                 | Relational, free on Railway/Supabase, scales well          |
+| Auth         | JWT (JSON Web Tokens)                      | Stateless, works great across frontend/backend             |
+| File Storage | Cloudinary                                 | Free tier, handles image uploads + optimization            |
+| Deployment   | Vercel (frontend) + Railway (backend + DB) | Both have free tiers                                       |
 
 ---
 
@@ -72,27 +73,27 @@ CREATE TABLE users (
 
 ## API Endpoints (REST)
 
-| Method | Route | Auth Required | Description |
-|---|---|---|---|
-| POST | /api/auth/register | No | Create account, returns JWT |
-| POST | /api/auth/login | No | Login, returns JWT |
-| GET | /api/auth/me | Yes | Get logged-in user's profile |
-| GET | /api/users | Yes | Get all church members |
-| GET | /api/users/:id | Yes | Get a specific member |
-| PUT | /api/users/:id | Yes | Update own profile |
+| Method | Route              | Auth Required | Description                  |
+| ------ | ------------------ | ------------- | ---------------------------- |
+| POST   | /api/auth/register | No            | Create account, returns JWT  |
+| POST   | /api/auth/login    | No            | Login, returns JWT           |
+| GET    | /api/auth/me       | Yes           | Get logged-in user's profile |
+| GET    | /api/users         | Yes           | Get all church members       |
+| GET    | /api/users/:id     | Yes           | Get a specific member        |
+| PUT    | /api/users/:id     | Yes           | Update own profile           |
 
 ---
 
 ## Frontend Pages & Routes
 
-| Path | Page | Protected? |
-|---|---|---|
-| `/` | Redirects to `/login` or `/directory` | No |
-| `/login` | LoginPage | No |
-| `/register` | RegisterPage | No |
-| `/directory` | DirectoryPage — shows all members | Yes |
-| `/profile/:id` | MemberProfilePage | Yes |
-| `/profile/edit` | EditProfilePage | Yes |
+| Path            | Page                                  | Protected? |
+| --------------- | ------------------------------------- | ---------- |
+| `/`             | Redirects to `/login` or `/directory` | No         |
+| `/login`        | LoginPage                             | No         |
+| `/register`     | RegisterPage                          | No         |
+| `/directory`    | DirectoryPage — shows all members     | Yes        |
+| `/profile/:id`  | MemberProfilePage                     | Yes        |
+| `/profile/edit` | EditProfilePage                       | Yes        |
 
 ---
 
@@ -112,31 +113,37 @@ CREATE TABLE users (
 We'll build this in small, explained blocks in this order:
 
 ### Phase 1 — Project Setup
+
 1. Create `client/` with Vite + React
 2. Create `server/` with Node.js + Express
 3. Set up `.gitignore`, folder structure, and initial `package.json` files
 
 ### Phase 2 — Backend Foundation
+
 4. Set up PostgreSQL connection (`config/db.js`)
 5. Create the `users` table (SQL migration)
 6. Set up Express app (`app.js`) with CORS, JSON body parsing
 
 ### Phase 3 — Auth Endpoints
+
 7. `userModel.js` — functions to query the DB
 8. `authController.js` — register + login logic
 9. `authRoutes.js` — wire up routes
 10. `authMiddleware.js` — JWT verification
 
 ### Phase 4 — Users Endpoints
+
 11. `usersController.js` — get all members, get one, update profile
 12. `usersRoutes.js` — protected routes
 
 ### Phase 5 — Cloudinary Image Upload
+
 13. Set up Cloudinary account + config
 14. Add `multer` middleware for file uploads
 15. Add image upload to register + edit profile
 
 ### Phase 6 — React Frontend
+
 16. Set up React Router + page scaffolding
 17. Build `AuthContext` (login/logout state)
 18. Build `LoginPage` and `RegisterPage` (with forms)
@@ -146,6 +153,7 @@ We'll build this in small, explained blocks in this order:
 22. Wire up all API calls via `services/`
 
 ### Phase 7 — Polish & Deploy
+
 23. Add form validation + error messages
 24. Style with CSS (or optionally Tailwind CSS)
 25. Deploy frontend to Vercel
@@ -156,6 +164,7 @@ We'll build this in small, explained blocks in this order:
 ## Key Packages
 
 **Server:**
+
 - `express` — web framework
 - `pg` — PostgreSQL client
 - `bcryptjs` — password hashing
@@ -166,6 +175,7 @@ We'll build this in small, explained blocks in this order:
 - `dotenv` — load environment variables
 
 **Client:**
+
 - `react-router-dom` — page routing
 - `axios` — HTTP requests to backend
 - `react-hook-form` — form handling + validation
@@ -184,7 +194,17 @@ We'll build this in small, explained blocks in this order:
 ## Verification
 
 After each phase, we'll verify by:
+
 1. Running the backend with `node src/app.js` and testing endpoints with a tool like **Bruno** or **Postman**
 2. Running the frontend with `npm run dev` and manually clicking through the UI
 3. Checking the database to confirm records are saved correctly
 4. At the end: registering a test account, logging in, viewing the directory, and uploading a profile photo end-to-end
+
+updates
+
+1. after updating a profile return to directory page
+2. make images bigger and better quality
+3. show password at login and registeration
+4. be able to delete account
+5. be able to change password
+6. send verification email

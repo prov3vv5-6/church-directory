@@ -39,7 +39,11 @@ export default function RegisterPage() {
       navigate("/directory");
     } catch (err) {
       const errData = err.response?.data;
-      setServerError(typeof errData?.error === 'string' ? errData.error : errData?.message || "Registration failed. Try again.");
+      setServerError(
+        typeof errData?.error === "string"
+          ? errData.error
+          : errData?.message || "Registration failed. Try again.",
+      );
     }
   }
 
@@ -57,7 +61,9 @@ export default function RegisterPage() {
               type="text"
               {...register("name", { required: "Name is required" })}
             />
-            {errors.name && <span className="field-error">{errors.name.message}</span>}
+            {errors.name && (
+              <span className="field-error">{errors.name.message}</span>
+            )}
           </div>
 
           <div className="form-group">
@@ -67,7 +73,9 @@ export default function RegisterPage() {
               type="email"
               {...register("email", { required: "Email is required" })}
             />
-            {errors.email && <span className="field-error">{errors.email.message}</span>}
+            {errors.email && (
+              <span className="field-error">{errors.email.message}</span>
+            )}
           </div>
 
           <div className="form-group">
@@ -77,10 +85,15 @@ export default function RegisterPage() {
               type="password"
               {...register("password", {
                 required: "Password is required",
-                minLength: { value: 6, message: "Password must be at least 6 characters" },
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
               })}
             />
-            {errors.password && <span className="field-error">{errors.password.message}</span>}
+            {errors.password && (
+              <span className="field-error">{errors.password.message}</span>
+            )}
           </div>
 
           <div className="form-group">

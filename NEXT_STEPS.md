@@ -1,10 +1,8 @@
 # Next Steps
 
-Phase 6 complete — React frontend built.
+● Yes — replace [YOUR-PASSWORD] with your actual Supabase database password. You can find it
+in Supabase → Settings → Database → scroll down to "Database password" section. There should be a "Reset password" option if you've never seen it, or a reveal button to show the  
+ current one.
 
-Phase 7 next: Polish + Deploy
-- Form validation error UX polish (inline vs toast)
-- Responsive / mobile CSS tweaks
-- Deploy frontend to Vercel
-- Deploy backend + DB to Railway
-- Set VITE_API_URL in Vercel env vars to Railway URL
+Your password from the local .env file (URL-decoded) is #VfU%4gqtq3PEWK — but since Supabase
+might show it differently in the dashboard, it's safer to grab it from there directly.
