@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { updateMember } from "../services/members";
+import { updateMember, deleteMember } from "../services/members";
 
 export default function EditProfilePage() {
-  const { user, login, token } = useAuth();
+  const { user, login, token, logout } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
+  const [deleteError, setDeleteError] = useState("");
   const [preview, setPreview] = useState(user?.profile_picture_url || null);
 
   const {
@@ -44,6 +45,21 @@ export default function EditProfilePage() {
     } catch (err) {
       const errData = err.response?.data;
       setServerError(typeof errData?.error === 'string' ? errData.error : errData?.message || "Update failed. Try again.");
+    }
+  }
+
+  async function handleDeleteAccount() {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete your account? This cannot be undone."
+    );
+    if (!confirmed) return;
+
+    try {
+      await deleteMember(user.id);
+      logout();
+      navigate("/login");
+    } catch (err) {
+      setDeleteError("Failed to delete account. Try again.");
     }
   }
 
@@ -100,6 +116,13 @@ export default function EditProfilePage() {
             </button>
           </div>
         </form>
+
+        <div className="danger-zone">
+          {deleteError && <p className="server-error">{deleteError}</p>}
+          <button type="button" onClick={handleDeleteAccount} className="btn-danger">
+            Delete Account
+          </button>
+        </div>
       </div>
     </div>
   );

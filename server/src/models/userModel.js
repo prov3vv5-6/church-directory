@@ -55,4 +55,9 @@ async function updateUser(id, { name, address, profile_picture_url }) {
   return result.rows[0] || null;
 }
 
-module.exports = { createUser, findUserByEmail, findUserById, getAllUsers, updateUser };
+// Delete a user by ID
+async function deleteUser(id) {
+  await db.query('DELETE FROM users WHERE id = $1', [id]);
+}
+
+module.exports = { createUser, findUserByEmail, findUserById, getAllUsers, updateUser, deleteUser };

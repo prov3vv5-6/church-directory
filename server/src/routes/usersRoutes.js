@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUsers, getUserById, updateUserById } = require('../controllers/usersController');
+const { getUsers, getUserById, updateUserById, deleteUserById } = require('../controllers/usersController');
 const requireAuth = require('../middleware/authMiddleware');
 const { upload, uploadToCloudinary } = require('../middleware/upload');
 
@@ -15,5 +15,8 @@ router.get('/:id', requireAuth, getUserById);
 
 // PUT /api/users/:id
 router.put('/:id', requireAuth, upload.single('profile_picture'), uploadToCloudinary, updateUserById);
+
+// DELETE /api/users/:id
+router.delete('/:id', requireAuth, deleteUserById);
 
 module.exports = router;

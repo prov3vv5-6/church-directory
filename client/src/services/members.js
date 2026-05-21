@@ -16,3 +16,7 @@ export async function updateMember(id, formData) {
   });
   return data;
 }
+
+export async function deleteMember(id) {
+  await api.delete(`/api/users/${id}`);
+}

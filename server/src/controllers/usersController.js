@@ -1,4 +1,4 @@
-const { getAllUsers, findUserById, updateUser } = require('../models/userModel');
+const { getAllUsers, findUserById, updateUser, deleteUser } = require('../models/userModel');
 
 // GET /api/users — returns all members for the directory page
 async function getUsers(req, res) {
@@ -37,4 +37,16 @@ async function updateUserById(req, res) {
   res.json(updated);
 }
 
-module.exports = { getUsers, getUserById, updateUserById };
+// DELETE /api/users/:id — permanently delete own account
+async function deleteUserById(req, res) {
+  const requestedId = parseInt(req.params.id);
+
+  if (requestedId !== req.user.id) {
+    return res.status(403).json({ error: 'You can only delete your own account' });
+  }
+
+  await deleteUser(requestedId);
+  res.json({ message: 'Account deleted' });
+}
+
+module.exports = { getUsers, getUserById, updateUserById, deleteUserById };
