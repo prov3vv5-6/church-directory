@@ -370,6 +370,31 @@ code {
   transition: box-shadow 0.15s, border-color 0.15s;
 }
 
+@media (min-width: 768px) {
+  .member-grid {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .member-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .member-avatar img,
+  .avatar-placeholder {
+    width: 150px;
+    height: 150px;
+  }
+
+  .avatar-placeholder {
+    font-size: 3.5rem;
+  }
+
+  .member-name {
+    font-size: 1.05rem;
+  }
+}
+
 .member-card:hover {
   border-color: var(--accent-border);
   box-shadow: var(--shadow);
