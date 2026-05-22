@@ -38,7 +38,7 @@ export default function DirectoryPage() {
       <header className="directory-header">
         <h1>Church Directory</h1>
         <div className="header-actions">
-          <Link to={`/profile/edit`} className="btn-secondary">
+          <Link to="/profile/settings" className="btn-secondary">
             Edit My Profile
           </Link>
           <button onClick={handleLogout} className="btn-outline">

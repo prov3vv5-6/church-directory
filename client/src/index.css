@@ -458,6 +458,148 @@ code {
   }
 }
 
+/* ── Settings layout ─────────────────────────────── */
+.settings-layout {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+}
+
+.settings-sidebar {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.settings-sidebar-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  margin: 0 0 0.4rem 0.75rem;
+}
+
+.settings-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-h);
+  font-size: 0.95rem;
+  transition: background 0.15s;
+}
+
+.settings-nav-link:hover {
+  background: var(--accent-bg);
+}
+
+.settings-nav-link--active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.settings-nav-arrow {
+  display: none;
+  color: var(--text);
+  opacity: 0.4;
+  font-size: 1.1rem;
+}
+
+.settings-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-back-mobile {
+  display: none;
+}
+
+.settings-section {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.settings-section h2 {
+  margin-bottom: 1.25rem;
+}
+
+.settings-danger-zone h2 {
+  color: #e53e3e;
+}
+
+.settings-danger-desc {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 767px) {
+  .settings-layout {
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0.75rem;
+  }
+
+  .settings-sidebar {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    padding-bottom: 0.25rem;
+  }
+
+  .settings-sidebar-title {
+    padding: 0.85rem 1rem 0.4rem;
+    margin: 0;
+  }
+
+  .settings-nav-link {
+    border-radius: 0;
+    border-top: 1px solid var(--border);
+    padding: 0.9rem 1rem;
+  }
+
+  .settings-nav-arrow {
+    display: block;
+  }
+
+  /* In a subsection: hide sidebar */
+  .settings-sidebar--child {
+    display: none;
+  }
+
+  /* At the index: hide outlet area */
+  .settings-content--hidden-mobile {
+    display: none;
+  }
+
+  .settings-content {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .settings-back-mobile {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .settings-back-mobile:hover {
+    text-decoration: underline;
+  }
+}
+
 /* ── Member profile page ─────────────────────────── */
 .profile-page {
   max-width: 600px;

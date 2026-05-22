@@ -45,7 +45,7 @@ export default function MemberProfilePage() {
         {member.address && <p className="profile-address">{member.address}</p>}
 
         {isOwnProfile && (
-          <Link to="/profile/edit" className="btn-primary" style={{ marginTop: "1rem" }}>
+          <Link to="/profile/settings" className="btn-primary" style={{ marginTop: "1rem" }}>
             Edit My Profile
           </Link>
         )}
