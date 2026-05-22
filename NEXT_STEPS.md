@@ -6,4 +6,4 @@ updates
 
 3. be able to change password
 4. send verification email
-5. change colors to church brand colors
+5. change email

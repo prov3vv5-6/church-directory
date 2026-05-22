@@ -20,3 +20,8 @@ export async function updateMember(id, formData) {
 export async function deleteMember(id) {
   await api.delete(`/api/users/${id}`);
 }
+
+export async function changePassword(currentPassword, newPassword) {
+  const { data } = await api.put('/api/users/change-password', { currentPassword, newPassword });
+  return data;
+}

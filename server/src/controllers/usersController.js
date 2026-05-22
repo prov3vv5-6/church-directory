@@ -1,4 +1,6 @@
-const { getAllUsers, findUserById, updateUser, deleteUser } = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const db = require('../config/db');
+const { getAllUsers, findUserById, updateUser, updatePassword, deleteUser } = require('../models/userModel');
 
 // GET /api/users — returns all members for the directory page
 async function getUsers(req, res) {
@@ -37,6 +39,35 @@ async function updateUserById(req, res) {
   res.json(updated);
 }
 
+// PUT /api/users/change-password — change the logged-in user's password
+async function changePassword(req, res) {
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Current and new password are required' });
+  }
+
+  if (newPassword.length < 6) {
+    return res.status(400).json({ error: 'New password must be at least 6 characters' });
+  }
+
+  // Fetch full user row so we can verify password_hash (findUserById omits it)
+  const result = await db.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
+  const user = result.rows[0];
+
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  const match = await bcrypt.compare(currentPassword, user.password_hash);
+  if (!match) {
+    return res.status(401).json({ error: 'Current password is incorrect' });
+  }
+
+  const newHash = await bcrypt.hash(newPassword, 10);
+  await updatePassword(req.user.id, newHash);
+
+  res.json({ message: 'Password updated successfully' });
+}
+
 // DELETE /api/users/:id — permanently delete own account
 async function deleteUserById(req, res) {
   const requestedId = parseInt(req.params.id);
@@ -49,4 +80,4 @@ async function deleteUserById(req, res) {
   res.json({ message: 'Account deleted' });
 }
 
-module.exports = { getUsers, getUserById, updateUserById, deleteUserById };
+module.exports = { getUsers, getUserById, updateUserById, changePassword, deleteUserById };

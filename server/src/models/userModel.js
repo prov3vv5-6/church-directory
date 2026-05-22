@@ -55,9 +55,17 @@ async function updateUser(id, { name, address, profile_picture_url }) {
   return result.rows[0] || null;
 }
 
+// Update a user's password hash
+async function updatePassword(id, newHash) {
+  await db.query(
+    'UPDATE users SET password_hash = $1, updated_at = NOW() WHERE id = $2',
+    [newHash, id]
+  );
+}
+
 // Delete a user by ID
 async function deleteUser(id) {
   await db.query('DELETE FROM users WHERE id = $1', [id]);
 }
 
-module.exports = { createUser, findUserByEmail, findUserById, getAllUsers, updateUser, deleteUser };
+module.exports = { createUser, findUserByEmail, findUserById, getAllUsers, updateUser, updatePassword, deleteUser };
