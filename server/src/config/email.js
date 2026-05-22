@@ -1,10 +1,9 @@
 const { Resend } = require('resend');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // TODO: replace 'onboarding@resend.dev' with your church domain email once
 // the domain is verified in Resend (e.g. noreply@yourchurch.org)
 async function sendPasswordResetEmail(toEmail, resetLink) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   await resend.emails.send({
     from: 'Church Directory <onboarding@resend.dev>',
     to: toEmail,
