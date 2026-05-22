@@ -405,8 +405,8 @@ code {
 
 .member-avatar img,
 .avatar-placeholder {
-  width: 72px;
-  height: 72px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -417,7 +417,7 @@ code {
   justify-content: center;
   background: var(--accent-bg);
   color: var(--accent);
-  font-size: 1.75rem;
+  font-size: 2.5rem;
   font-weight: 600;
 }
 
