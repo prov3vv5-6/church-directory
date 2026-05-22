@@ -49,7 +49,7 @@ async function updateUser(id, { name, address, profile_picture_url }) {
          profile_picture_url = COALESCE($3, profile_picture_url),
          updated_at = NOW()
      WHERE id = $4
-     RETURNING id, name, email, address, profile_picture_url`,
+     RETURNING id, name, email, address, profile_picture_url, is_admin`,
     [name || null, address || null, profile_picture_url || null, id]
   );
   return result.rows[0] || null;
