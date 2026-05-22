@@ -158,6 +158,18 @@ code {
   text-align: center;
 }
 
+.forgot-password-link {
+  font-size: 0.8rem;
+  color: var(--text);
+  text-decoration: none;
+  margin-top: 0.25rem;
+  align-self: flex-end;
+}
+
+.forgot-password-link:hover {
+  color: var(--accent);
+}
+
 /* ── Forms ───────────────────────────────────────── */
 .form-group {
   display: flex;

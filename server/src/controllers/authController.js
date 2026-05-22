@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { createUser, findUserByEmail } = require('../models/userModel');
+const crypto = require('crypto');
+const { createUser, findUserByEmail, findUserById, createResetToken, findResetToken, deleteResetTokensForUser, updatePassword } = require('../models/userModel');
+const { sendPasswordResetEmail } = require('../config/email');
 
 // Helper — creates a signed JWT containing the user's id and email
 function generateToken(user) {
@@ -78,4 +80,43 @@ async function getMe(req, res) {
   res.json(user);
 }
 
-module.exports = { register, login, getMe };
+// POST /api/auth/forgot-password
+// Always returns 200 regardless of whether the email exists (prevents email enumeration)
+async function forgotPassword(req, res) {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ error: 'Email is required' });
+
+  const user = await findUserByEmail(email);
+  if (user) {
+    const token = crypto.randomBytes(32).toString('hex');
+    await createResetToken(user.id, token);
+    const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${token}`;
+    await sendPasswordResetEmail(user.email, resetLink);
+  }
+
+  res.json({ message: 'If an account with that email exists, a reset link has been sent.' });
+}
+
+// POST /api/auth/reset-password
+async function resetPassword(req, res) {
+  const { token, newPassword } = req.body;
+  if (!token || !newPassword) {
+    return res.status(400).json({ error: 'Token and new password are required' });
+  }
+  if (newPassword.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters' });
+  }
+
+  const record = await findResetToken(token);
+  if (!record) {
+    return res.status(400).json({ error: 'This reset link is invalid or has expired.' });
+  }
+
+  const newHash = await bcrypt.hash(newPassword, 10);
+  await updatePassword(record.user_id, newHash);
+  await deleteResetTokensForUser(record.user_id);
+
+  res.json({ message: 'Password updated successfully.' });
+}
+
+module.exports = { register, login, getMe, forgotPassword, resetPassword };

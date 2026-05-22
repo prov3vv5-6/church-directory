@@ -68,4 +68,35 @@ async function deleteUser(id) {
   await db.query('DELETE FROM users WHERE id = $1', [id]);
 }
 
-module.exports = { createUser, findUserByEmail, findUserById, getAllUsers, updateUser, updatePassword, deleteUser };
+// Create a one-hour password reset token for the given user
+async function createResetToken(userId, token) {
+  await db.query(
+    `INSERT INTO password_reset_tokens (user_id, token, expires_at)
+     VALUES ($1, $2, NOW() + INTERVAL '1 hour')
+     ON CONFLICT (token) DO NOTHING`,
+    [userId, token]
+  );
+}
+
+// Find a valid (non-expired) token and return it with the user's email
+async function findResetToken(token) {
+  const result = await db.query(
+    `SELECT t.user_id, t.token, t.expires_at, u.email
+     FROM password_reset_tokens t
+     JOIN users u ON u.id = t.user_id
+     WHERE t.token = $1 AND t.expires_at > NOW()`,
+    [token]
+  );
+  return result.rows[0] || null;
+}
+
+// Delete all reset tokens for a user (called after successful reset)
+async function deleteResetTokensForUser(userId) {
+  await db.query('DELETE FROM password_reset_tokens WHERE user_id = $1', [userId]);
+}
+
+module.exports = {
+  createUser, findUserByEmail, findUserById, getAllUsers,
+  updateUser, updatePassword, deleteUser,
+  createResetToken, findResetToken, deleteResetTokensForUser,
+};

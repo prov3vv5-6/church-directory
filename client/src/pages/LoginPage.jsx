@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/auth";
 
@@ -22,6 +22,8 @@ const EyeOffIcon = () => (
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const resetSuccess = searchParams.get("reset") === "success";
   const [serverError, setServerError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -48,6 +50,12 @@ export default function LoginPage() {
       <div className="auth-card">
         <h1>Church Directory</h1>
         <h2>Sign In</h2>
+
+        {resetSuccess && (
+          <p className="success-msg" style={{ marginBottom: "1rem" }}>
+            Password updated! Sign in with your new password.
+          </p>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="form-group">
@@ -78,6 +86,7 @@ export default function LoginPage() {
               </button>
             </div>
             {errors.password && <span className="field-error">{errors.password.message}</span>}
+            <Link to="/forgot-password" className="forgot-password-link">Forgot password?</Link>
           </div>
 
           {serverError && <p className="server-error">{serverError}</p>}
