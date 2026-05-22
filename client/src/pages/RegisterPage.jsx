@@ -66,7 +66,7 @@ export default function RegisterPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1>Church Directory</h1>
+        <h1>Buhl Bible Church Directory</h1>
         <h2>Create Account</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>

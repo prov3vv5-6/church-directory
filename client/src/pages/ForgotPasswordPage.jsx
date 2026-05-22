@@ -27,7 +27,7 @@ export default function ForgotPasswordPage() {
     return (
       <div className="auth-page">
         <div className="auth-card">
-          <h1>Church Directory</h1>
+          <h1>Buhl Bible Church Directory</h1>
           <h2>Check your email</h2>
           <p style={{ marginBottom: "1.25rem", lineHeight: "1.6" }}>
             If an account with that email exists, we've sent a reset link. Check your inbox and follow the instructions.
@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1>Church Directory</h1>
+        <h1>Buhl Bible Church Directory</h1>
         <h2>Forgot Password</h2>
 
         <p style={{ marginBottom: "1.25rem", fontSize: "0.9rem" }}>

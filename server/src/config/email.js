@@ -5,12 +5,12 @@ const { Resend } = require('resend');
 async function sendPasswordResetEmail(toEmail, resetLink) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   await resend.emails.send({
-    from: 'Church Directory <onboarding@resend.dev>',
+    from: 'Buhl Bible Church Directory <onboarding@resend.dev>',
     to: toEmail,
     subject: 'Reset your password',
     html: `
       <p>Hi,</p>
-      <p>We received a request to reset your Church Directory password.</p>
+      <p>We received a request to reset your Buhl Bible Church Directory password.</p>
       <p>
         <a href="${resetLink}" style="
           display: inline-block;

@@ -36,7 +36,7 @@ export default function DirectoryPage() {
   return (
     <div className="page">
       <header className="directory-header">
-        <h1>Church Directory</h1>
+        <h1>Buhl Bible Church Directory</h1>
         <div className="header-actions">
           <Link to="/profile/settings" className="btn-secondary">
             Edit My Profile

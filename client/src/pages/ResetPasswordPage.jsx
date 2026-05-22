@@ -22,7 +22,7 @@ export default function ResetPasswordPage() {
     return (
       <div className="auth-page">
         <div className="auth-card">
-          <h1>Church Directory</h1>
+          <h1>Buhl Bible Church Directory</h1>
           <h2>Invalid Link</h2>
           <p style={{ marginBottom: "1.25rem" }}>
             This reset link is missing or invalid. Please request a new one.
@@ -51,7 +51,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1>Church Directory</h1>
+        <h1>Buhl Bible Church Directory</h1>
         <h2>Reset Password</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
